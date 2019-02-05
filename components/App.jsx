@@ -10,7 +10,6 @@ const store = new Store();
 
 const SDataTable = styled(DataTable)`
   margin: 1em;
-  z-index: -1;
 `;
 
 export default function App(props) {

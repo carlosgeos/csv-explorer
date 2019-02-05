@@ -16,6 +16,14 @@ const Wrapper = styled.div`
   min-width: 11rem;
 `
 
+/* Avoid select dropdown hiding under other components */
+const selectStyles = {
+  container: (base, state) => ({
+    ...base,
+    zIndex: "10"
+  })
+};
+
 @inject("store")
 @observer
 export default class LangPicker extends React.Component {
@@ -28,7 +36,7 @@ export default class LangPicker extends React.Component {
     /* Update store, other components might need it */
     this.props.store.lang = lang.value;
     /* Update i18n, although this change could be triggered from the
-    store or top level component */
+       store or top level component */
     i18n.changeLanguage(lang.value);
   }
 
@@ -36,6 +44,7 @@ export default class LangPicker extends React.Component {
     return (
       <Wrapper>
          <Select
+           styles={selectStyles}
            defaultValue={langs[0]}
            isSearchable={false}
            isMulti={false}
