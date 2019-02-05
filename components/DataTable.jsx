@@ -7,8 +7,8 @@ import { observer, inject } from "mobx-react"
 export default class DataTable extends React.Component {
   render () {
     let rows = this.props.store.rows;
-    const listItems = rows.map((row) =>
-      <li key={row}>{row.high}</li>
+    const listItems = rows.map((row, index) =>
+      <li key={index}>{row.high}</li>
     );
     return (
       <ul>
