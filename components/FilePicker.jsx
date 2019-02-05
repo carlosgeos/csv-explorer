@@ -5,6 +5,7 @@ import { css } from '@emotion/core';
 import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
 import { action } from 'mobx';
+import { withNamespaces } from 'react-i18next';
 
 /* For the window object to be defined, Papaparse need the following
    SCRIPT_PATH */
@@ -26,9 +27,14 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
+const Wrapper = styled.div`
+  display: inline-block;
+  margin-right: 3em;
+`
+
 @inject("store")
 @observer
-export default class FilePicker extends React.Component {
+class FilePicker extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -55,10 +61,12 @@ export default class FilePicker extends React.Component {
   }
 
   render () {
+    let lng = this.props.store.lang;
+    const {t} = this.props;
     return (
-      <div>
+      <Wrapper>
          <Picker htmlFor="file-upload">
-            {this.props.store.file_name || "Choose CSV file"}
+            {t("fp.label") || "Choose CSV file"}
          </Picker>
          <HiddenInput onChange={this.handleChange} id="file-upload" type="file"/>
          <ClipLoader
@@ -67,7 +75,9 @@ export default class FilePicker extends React.Component {
            color={'#29d'}
            loading={this.props.store.loading}
          />
-      </div>
+      </Wrapper>
     );
   }
 }
+
+export default withNamespaces()(FilePicker);
