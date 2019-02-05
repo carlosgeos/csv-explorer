@@ -1,7 +1,8 @@
 import React from 'react';
 import Papa from '../papaparse.js';
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
 import styled from 'styled-components';
-import NProgress from 'nprogress';
 import { observer, inject } from 'mobx-react';
 import { action } from 'mobx';
 
@@ -15,7 +16,7 @@ const Picker = styled.label`
   color: #29d;
   border: 2px solid #29d;
   border-radius: 4px;
-  margin: 0.5em;
+  margin: 1em;
   display: inline-block;
   padding: 1em;
   cursor: pointer;
@@ -30,33 +31,25 @@ const HiddenInput = styled.input`
 export default class FilePicker extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.updateData = this.updateData.bind(this);
   }
 
-  @action updateRows(results) {
+  @action updateData(results) {
     this.props.store.rows = results.data;
-  }
-
-  @action newRow(row) {
-    /* NOT USING. Rendering row by row freezes the UI */
-    this.props.store.rows.push(row);
+    this.props.store.headers = results.meta.fields;
+    this.props.store.loading = false;
   }
 
   @action handleChange(event) {
-    NProgress.start();
+    this.props.store.loading = true;
     let file = event.target.files[0];
-    let rows = []; /* local copy to gather bit by bit */
     this.props.store.file_name = file.name;
     let parsed = Papa.parse(file, {
       header: true,
       worker: true,
-      chunk: (results) => {
-        NProgress.inc();
-        console.log(results);
-      },
-      complete: () => {
-        NProgress.done();
+      complete: (results) => {
+        this.updateData(results);
       }
     });
   }
@@ -68,6 +61,12 @@ export default class FilePicker extends React.Component {
             {this.props.store.file_name || "Choose CSV file"}
          </Picker>
          <HiddenInput onChange={this.handleChange} id="file-upload" type="file"/>
+         <ClipLoader
+           sizeUnit={"em"}
+           size={1}
+           color={'#29d'}
+           loading={this.props.store.loading}
+         />
       </div>
     );
   }
