@@ -13,6 +13,16 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
+          // Papaparse has to be statically served
+          test: /\.papaparse.js$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {},
+            },
+          ],
+        },
+        {
           test: /\.m?jsx?$/,
           exclude: /(node_modules|bower_components)/,
           use: {
@@ -21,7 +31,7 @@ module.exports = (env, argv) => {
               presets: ['@babel/preset-env', '@babel/preset-react']
             }
           }
-        },
+        }
       ]
     },
     devServer: {
