@@ -7,8 +7,7 @@ import { Table, Column, Cell } from 'fixed-data-table-2';
 @observer
 export default class DataTable extends React.Component {
   render () {
-    let rows = this.props.store.rows;
-    let headers = this.props.store.headers;
+    const { rows, headers } = this.props.store;
     const columns = headers.map((e) =>
       <Column
         key={e}

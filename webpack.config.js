@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = (env, argv) => {
   return {
-    entry: './index.js',
+    entry: './index.jsx',
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'main-[hash].js'

@@ -36,11 +36,14 @@
   },
   "dependencies": {
     "fixed-data-table-2": "^0.8.16",
+    "i18next": "^14.0.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "papaparse": "^4.6.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-i18next": "^9.0.10",
+    "react-select": "^2.3.0",
     "react-spinners": "^0.5.1",
     "styled-components": "^4.1.3"
   }
