@@ -1,5 +1,4 @@
 import React from 'react';
-import Papa from '../papaparse.js';
 import { ClipLoader } from 'react-spinners';
 import { css } from '@emotion/core';
 import styled from 'styled-components';
@@ -7,9 +6,9 @@ import { observer, inject } from 'mobx-react';
 import { action } from 'mobx';
 import { withNamespaces } from 'react-i18next';
 
-/* For the window object to be defined, Papaparse need the following
+/* For the window object to be defined, Papaparse needs the following
    SCRIPT_PATH */
-Papa.SCRIPT_PATH = "/papaparse.js";
+Papa.SCRIPT_PATH = "/csv-explorer/papaparse.js";
 
 const Picker = styled.label`
   width: 11rem;
