@@ -13,17 +13,8 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          // Papaparse has to be statically served and not webpack bundled
-          test: /papaparse\.js$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                outputPath: argv.mode == 'development' ? 'csv-explorer' : ''
-              },
-            },
-          ],
+          test: /\.worker\.js$/,
+          use: { loader: 'worker-loader' }
         },
         {
           test: /\.m?jsx?$/,
@@ -37,13 +28,9 @@ module.exports = (env, argv) => {
         }
       ]
     },
-    devServer: {
-      hot: true
-    },
     plugins: [
       new CleanWebpackPlugin('dist'),
-      new HtmlWebpackPlugin({template: './index.html'}),
-      new webpack.HotModuleReplacementPlugin()
+      new HtmlWebpackPlugin({template: './index.html'})
     ]
   };
 };
