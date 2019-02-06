@@ -39,6 +39,7 @@
     "i18next": "^14.0.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
+    "papaparse": "^4.6.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-i18next": "^9.0.10",

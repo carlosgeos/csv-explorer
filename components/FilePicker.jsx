@@ -1,14 +1,11 @@
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import { css } from '@emotion/core';
+import Papa from 'papaparse';
 import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
 import { action } from 'mobx';
 import { withNamespaces } from 'react-i18next';
-
-/* For the window object to be defined, Papaparse needs the following
-   SCRIPT_PATH */
-Papa.SCRIPT_PATH = "/csv-explorer/papaparse.js";
 
 const Picker = styled.label`
   width: 11rem;
@@ -52,7 +49,6 @@ class FilePicker extends React.Component {
     this.props.store.file_name = file.name;
     let parsed = Papa.parse(file, {
       header: true,
-      worker: true,
       complete: (results) => {
         this.updateData(results);
       }

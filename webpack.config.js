@@ -13,19 +13,6 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          // Papaparse has to be statically served and not webpack bundled
-          test: /papaparse\.js$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                outputPath: argv.mode == 'development' ? 'csv-explorer' : ''
-              },
-            },
-          ],
-        },
-        {
           test: /\.m?jsx?$/,
           exclude: /(node_modules|bower_components)/,
           use: {
