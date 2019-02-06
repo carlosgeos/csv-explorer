@@ -13,6 +13,10 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
+          test: /\.worker\.js$/,
+          use: { loader: 'worker-loader' }
+        },
+        {
           test: /\.m?jsx?$/,
           exclude: /(node_modules|bower_components)/,
           use: {
@@ -24,13 +28,9 @@ module.exports = (env, argv) => {
         }
       ]
     },
-    devServer: {
-      hot: true
-    },
     plugins: [
       new CleanWebpackPlugin('dist'),
-      new HtmlWebpackPlugin({template: './index.html'}),
-      new webpack.HotModuleReplacementPlugin()
+      new HtmlWebpackPlugin({template: './index.html'})
     ]
   };
 };

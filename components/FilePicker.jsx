@@ -1,10 +1,11 @@
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
-import { css } from '@emotion/core';
+import css from '@emotion/core';
 import Papa from 'papaparse';
+import CSVWorker from 'worker-loader!./worker.js';
 import styled from 'styled-components';
-import { observer, inject } from 'mobx-react';
 import { action } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import { withNamespaces } from 'react-i18next';
 
 const Picker = styled.label`
@@ -37,22 +38,27 @@ class FilePicker extends React.Component {
     this.updateData = this.updateData.bind(this);
   }
 
+  componentWillMount() {
+    this.worker = new CSVWorker;
+    this.worker.onmessage = (event) => {
+      console.log("done");
+      this.updateData(event);
+      this.props.store.loading = false;
+    };
+  }
+
   @action updateData(results) {
-    this.props.store.rows = results.data;
-    this.props.store.headers = results.meta.fields;
+    /* Blocking UI routine */
+    this.props.store.rows = results.data.data;
+    this.props.store.headers = results.data.meta.fields;
     this.props.store.loading = false;
   }
 
   @action handleChange(event) {
     this.props.store.loading = true;
-    let file = event.target.files[0];
+    const file = event.target.files[0];
     this.props.store.file_name = file.name;
-    let parsed = Papa.parse(file, {
-      header: true,
-      complete: (results) => {
-        this.updateData(results);
-      }
-    });
+    this.worker.postMessage(file);
   }
 
   render () {
