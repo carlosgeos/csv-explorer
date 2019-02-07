@@ -1,1 +1,7 @@
-module.exports = Object.create(null);
+class CSVWorker {
+  constructor(props) {
+
+  }
+}
+
+module.exports = CSVWorker;

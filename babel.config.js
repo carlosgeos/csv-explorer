@@ -5,6 +5,12 @@ module.exports = function (api) {
   const plugins = [
     ["@babel/plugin-proposal-decorators", { "legacy": true}],
     ["@babel/plugin-proposal-class-properties", { "loose": true}],
+    ["babel-plugin-styled-components",
+     {
+       // Simpler display names for styled components (useful for
+       // testing with enzyme.find())
+       "fileName": false
+     }],
     ["emotion"]
   ];
 
