@@ -22,7 +22,10 @@
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/setupTests.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "worker-loader!.*":"<rootDir>/__mocks__/workerMock.js"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
